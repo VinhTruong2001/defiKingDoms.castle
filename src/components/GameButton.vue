@@ -36,6 +36,8 @@ export default {
   color: #000;
   padding: 0 3px;
   margin: auto;
+  font-family: "Lora", Georgia, serif;
+
 }
 
 @keyframes buttonAnimation {
