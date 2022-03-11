@@ -1,0 +1,295 @@
+html {
+  overflow: hidden;
+  height: 100%;
+  cursor: url("../assets/images/default-cursor.png"), auto !important;
+  font-family: "Lora", Georgia, serif;
+}
+
+button {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.click-cursor {
+  cursor: url("../assets/images/click-cursor.png"), auto !important;
+}
+
+.castle-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #131313;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.castle-bg {
+  position: relative;
+  background-image: url("../assets/images/castle-bg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 555px;
+  height: 585px;
+  transition: all 0s;
+  transform-origin: center;
+}
+
+.fire-wrap {
+  overflow: hidden;
+  width: 12px;
+  height: 15px;
+  background-color: transparent;
+  position: absolute;
+}
+
+.fire-wrap-1 {
+  bottom: 128px;
+  right: 132px;
+}
+
+.fire-wrap-2 {
+  bottom: 128px;
+  right: 59px;
+}
+
+.fire-wrap-3 {
+  top: 196px;
+  right: 75px;
+}
+
+.fire {
+  background-image: url("../assets/images/fire.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 120px;
+  height: 100%;
+  transform: translateX(0);
+  animation: translateAnimation steps(8) normal 1s infinite;
+}
+
+.hall-light-wrap {
+  overflow: hidden;
+  width: 12px;
+  height: 3px;
+  background-color: transparent;
+  position: absolute;
+  top: 105.5px;
+}
+
+.hall-light-wrap-1 {
+  right: 112px;
+}
+
+.hall-light-wrap-2 {
+  right: 78px;
+}
+
+.hall-light-wrap-3 {
+  right: 44px;
+}
+
+.hall-light {
+  background-image: url("../assets/images/halllight.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 136px;
+  animation: translateAnimation steps(8) normal 2s infinite;
+}
+
+.torch-wrap {
+  overflow: hidden;
+  width: 12px;
+  height: 15px;
+  background-color: transparent;
+  position: absolute;
+  top: 56px;
+}
+
+.torch-wrap-1 {
+  right: 97.5px;
+}
+
+.torch-wrap-2 {
+  right: 63.5px;
+}
+
+.torch {
+  background-image: url("../assets/images/torch.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 125px;
+  animation: translateAnimation steps(8) normal 1s infinite;
+}
+
+.beast-wrap-1 {
+  overflow: hidden;
+  width: 23px;
+  height: 20px;
+  position: absolute;
+  top: 91.4px;
+  left: 74.9px;
+}
+
+.beast-1 {
+  background-image: url("../assets/images/beast1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 200px;
+  animation: translateAnimation steps(8) normal 2s infinite;
+}
+
+.beast-wrap-2 {
+  overflow: hidden;
+  width: 11px;
+  height: 11px;
+  position: absolute;
+  top: 80px;
+  left: 118.9px;
+}
+
+.beast-2 {
+  background-image: url("../assets/images/beast2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 92px;
+  animation: translateAnimation steps(8) normal 3s infinite;
+}
+
+.throne-light-wrap {
+  overflow: hidden;
+  width: 79px;
+  height: 11px;
+  position: absolute;
+  top: 157.5px;
+  left: 238.9px;
+}
+
+.throne-light {
+  background-image: url("../assets/images/thronelight.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 634px;
+  animation: translateAnimation steps(8) normal 3s infinite;
+}
+
+.jester-wrap {
+  overflow: hidden;
+  width: 14px;
+  height: 19px;
+}
+
+.jester-container {
+  position: absolute;
+  bottom: 137px;
+  left: 166px;
+}
+
+.jester {
+  background-image: url("../assets/images/jester.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 17px;
+  width: 1012px;
+  animation: translateAnimation steps(58) normal 2.2s infinite;
+}
+
+@keyframes translateAnimation {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.land-auction-btn {
+  position: absolute;
+  top: 184.5px;
+  left: 88px;
+  height: 43px;
+  width: 33px;
+}
+
+.jester-grandle-btn {
+  top: -9px;
+  right: -11px;
+}
+
+@media (max-width: 376px) {
+  .fire-wrap,
+  .hall-light-wrap,
+  .torch-wrap,
+  .beast-wrap-1,
+  .beast-wrap-2,
+  .throne-light-wrap,
+  .jester-wrap {
+    transform: scale(0.7);
+  }
+  .fire-wrap-1 {
+    bottom: 179px;
+    right: 87px;
+  }
+  .fire-wrap-2 {
+    bottom: 179px;
+    right: 38px;
+  }
+  .fire-wrap-3 {
+    top: 226px;
+    right: 48px;
+  }
+  .hall-light-wrap {
+    top: 165.5px;
+  }
+  .hall-light-wrap-1 {
+    right: 74px;
+  }
+  .hall-light-wrap-2 {
+    right: 51px;
+  }
+  .hall-light-wrap-3 {
+    right: 28px;
+  }
+  .torch-wrap {
+    top: 131px;
+  }
+  .torch-wrap-1 {
+    right: 64.52px;
+  }
+  .torch-wrap-2 {
+    right: 42.5px;
+  }
+  .beast-wrap-1 {
+    top: 154.4px;
+    left: 45.9px;
+  }
+  .beast-wrap-2 {
+    top: 150px;
+    left: 78.49px;
+  }
+  .throne-light-wrap {
+    top: 198.5px;
+    left: 147.9px;
+  }
+  .jester-container {
+    bottom: 183px;
+    left: 107px;
+  }
+  .land-auction-btn {
+    top: 215.5px;
+    left: 55px;
+  }
+}
