@@ -3,7 +3,7 @@
 
         <div
             ref="castleOverlay"
-            class="castle-overlay"
+            class="castle-overlay overlay"
             @wheel="(e) => zoomCastle(e)"
         >
             <div
@@ -86,12 +86,18 @@
             title="Land Auction"
             :buttons="[
                 {
-                    title: 'View All Land'
+                    title: 'View All Land',
+                    click: () => this.$refs.landAuction.toggle(),
                 },
                 {
-                    title: 'Buy Land'
-                }
+                    title: 'Buy Land',
+                    click: () => {},
+                },
             ]"
+        />
+
+        <land-auction
+            ref="landAuction"
         />
     </div>
 </template>
@@ -100,16 +106,18 @@
 import './assets/base.css'
 import GameButton from './components/GameButton.vue'
 import Modal from './components/Modal.vue'
+import LandAuction from './components/LandAuction.vue'
 
 export default {
     components: {
         GameButton,
         Modal,
+        LandAuction,
     },
 
     data: () => {
         return {
-            scale: 1,
+            scale: 2.2,
             translate: { x: 0, y: 0,},
             scrollTimeout: 0,
             isMouseDown: false,
@@ -120,7 +128,6 @@ export default {
             stopPosition: {x: 0, y: 0},
             resetInterval: 0,
             resetTimeout: 0,
-            isModalOpen: false,
         }
     },
 
@@ -188,7 +195,7 @@ export default {
             this.mousePosition.x = x;
             this.mousePosition.y =y;
 
-            if (this.isMouseDown && !this.isModalOpen) {
+            if (this.isMouseDown) {
                 this.dragCastle(x,y);
             }
         },
@@ -210,7 +217,7 @@ export default {
                     }
                 }
 
-                const resetPoint = this.scale * 100;
+                const resetPoint = this.scale * 200;
 
                 if (this.scale < 1.5) {
                     if (this.distance.y !== 0) {
@@ -241,30 +248,28 @@ export default {
         },
 
         zoomCastle(e) {
-            if (!this.isModalOpen) {
-                if (e.deltaY < 0) {
-                    clearInterval(this.resetInterval);
-                    clearTimeout(this.scrollTimeout);
-                    if (this.scale < 3) {
-                        this.scale += 0.15;
+            if (e.deltaY < 0) {
+                clearInterval(this.resetInterval);
+                clearTimeout(this.scrollTimeout);
+                if (this.scale < 3) {
+                    this.scale += 0.15;
 
-                        this.distance.x = window.innerWidth/2 - this.mousePosition.x;
-                        this.distance.y = window.innerHeight/2 - this.mousePosition.y
+                    this.distance.x = window.innerWidth/2 - this.mousePosition.x;
+                    this.distance.y = window.innerHeight/2 - this.mousePosition.y
 
-                        this.setCastleTranslate(
-                            this.distance.x,
-                            this.distance.y,
-                        );
-                    }
-
-                    this.scrollTimeout = setTimeout(() => {
-                        this.resetToCenter();
-                    }, 500)
-
-                } else if (this.scale > 1) {
-                    this.scale -= 0.15;
-                    this.setCastleTranslate(0, 0);
+                    this.setCastleTranslate(
+                        this.distance.x,
+                        this.distance.y,
+                    );
                 }
+
+                this.scrollTimeout = setTimeout(() => {
+                    this.resetToCenter();
+                }, 500)
+
+            } else if (this.scale > 1.3) {
+                this.scale -= 0.15;
+                this.setCastleTranslate(0, 0);
             }
         },
 
@@ -273,7 +278,7 @@ export default {
             this.distance.y = y - this.currentPosition.y + (this.isReseting ?  this.stopPosition.y : 0);
 
 
-            const limit = 300 * this.scale;
+            const limit = 500 * this.scale;
 
             if (this.distance.x >= limit) {
                 this.distance.x = limit
@@ -290,7 +295,7 @@ export default {
             if (this.distance.x !== 0 && this.distance.y !== 0) {
                 this.setCastleTranslate(this.distance.x, this.distance.y)
             }
-        }
+        },
     }
 }
 </script>
