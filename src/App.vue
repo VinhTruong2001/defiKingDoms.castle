@@ -245,7 +245,7 @@ export default {
                 if (e.deltaY < 0) {
                     clearInterval(this.resetInterval);
                     clearTimeout(this.scrollTimeout);
-                    if (this.scale < 2.3) {
+                    if (this.scale < 3) {
                         this.scale += 0.15;
 
                         this.distance.x = window.innerWidth/2 - this.mousePosition.x;

@@ -1,21 +1,23 @@
 <template>
     <div
-        v-if="this.isOpen"
-        class="modal-overlay"
+        :class="`modal-overlay overlay ${this.isOpen ? 'active' : ''}`"
     >
-        <div class="modal">
+        <div class="modal game-border fancy">
             <div
                 class="close-btn click-cursor"
                 @click="this.toggleModal()"
             ></div>
 
-            <h3 class="modal-title">{{ this.title }}</h3>
+            <h3 class="modal-title">
+                <span>{{ this.title }}</span>
+            </h3>
 
             <div class="modal-button-list">
                 <button
-                    class="modal-button click-cursor"
+                    class="green-button click-cursor"
                     v-for="btn in this.buttons"
                     :key="btn.title"
+                    @click="btn.click()"
                 >
                     {{ btn.title }}
                 </button>
@@ -45,47 +47,54 @@ export default {
 
 <style scoped>
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    z-index: -1;
+    opacity: 0;
+    will-change: opacity;
+    transition: all 0.5s linear;
+}
+
+.modal-overlay.active {
     z-index: 2000;
-    background-color: rgba(0, 0, 0, 0.2);
-    display: flex;
+    opacity: 1;
+    will-change: opacity;
+    transition: all 0.5s linear;
 }
 
 .modal {
-    position: relative;
-    background-image: url("../assets/images/modal.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
     margin: auto;
-    width: 500px;
-    height: 190px;
-}
-
-.close-btn {
-    background-image: url("../assets/images/close-modal-btn.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    position: absolute;
-    top: 21px;
-    right: 20px;
-    width: 34px;
-    height: 34px;
-}
-
-.close-btn:hover {
-    opacity: 0.9;
+    width: 600px;
+    height: 250px;
 }
 
 .modal-title {
+    position: relative;
+    top: 10px;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     margin-top: 30px;
     color: #764d43;
+    background-image: url('../assets/images/borders/modal-title-middle.png');
+    background-repeat: repeat-x;
+    margin: 0 auto;
+    height: 70px;
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-title::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: calc(100% + 60px);
+    top: 0;
+    left: -30px;
+    height: 100%;
+    background-image: url('../assets/images/borders/modal-title-left.png'),
+        url('../assets/images/borders/modal-title-right.png');
+    background-repeat: no-repeat;
+    background-position: 0 0,100% 0;
 }
 
 .modal-button-list {
@@ -95,34 +104,19 @@ export default {
     margin-top: 30px;
 }
 
-.modal-button {
-    background-image: url("../assets/images/modal-btn.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: #066c45;
-    border-radius: 6px;
-    color: #ffe3bc;
-    width: 130px;
-    height: 26px;
-    font-size: 12px;
-    margin: 2px 0;
-}
-
-.modal-button:hover {
-    background-color: #00984b;
+.modal-button-list button {
+    min-width: 200px;
+    margin: 5px 0;
 }
 
 @media (max-width: 376px) {
     .modal {
-        background-image: url("../assets/images/responsive-modal.png");
         width: 100vw;
         height: 350px;
     }
 
     .modal-title {
-        font-size: 18px;
-        margin-top: 90px;
-        color: #764d43;
+        width: 90px;
     }
 
     .close-btn {
