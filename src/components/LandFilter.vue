@@ -1,90 +1,92 @@
 <template>
     <div class="filter game-border basic">
-        <!-- Header -->
-        <div class="filter-header">
-            <div class="filter-header-group">
-                <span>Filter</span>
-                <div class="filter-toggle-btn click-cursor">
-                    <i class="fas fa-angle-left"></i>
+        <template v-if="isExpanded">
+            <!-- Header -->
+            <div class="filter-header">
+                <div class="filter-header-group">
+                    <span>Filter</span>
+                    <div class="filter-toggle-btn click-cursor">
+                        <i class="fas fa-angle-left"></i>
+                    </div>
+                </div>
+                <div class="filter-header-group">
+                    <button
+                        class="green-button click-cursor filter-btn"
+                    >
+                        Apply
+                    </button>
+
+                    <button
+                        class="green-button click-cursor filter-btn"
+                    >
+                        Reset
+                    </button>
                 </div>
             </div>
-            <div class="filter-header-group">
-                <button
-                    class="green-button click-cursor filter-btn"
-                >
-                    Apply
-                </button>
+            <hr>
 
-                <button
-                    class="green-button click-cursor filter-btn"
-                >
-                    Reset
-                </button>
-            </div>
-        </div>
-        <hr>
+            <!-- Body -->
+            <div class="filter-body">
+                <!-- Search -->
+                <div class="filter-search">
+                    <input
+                        type="text"
+                        class="filter-search-input"
+                        placeholder="Search by Land ID"
+                    >
+                </div>
 
-        <!-- Body -->
-        <div class="filter-body">
-            <!-- Search -->
-            <div class="filter-search">
-                <input
-                    type="text"
-                    class="filter-search-input"
-                    placeholder="Search by Land ID"
-                >
-            </div>
+                <!-- Status -->
+                <div class="filter-status">
+                    <span class="filter-heading">Status</span>
+                    <div class="container">
+                        <ul class="filter-status__list row">
+                            <li
+                                class="filter-status__item col c-6"
+                                v-for="(status, index) in filterStatus"
+                                :key="status"
+                            >
+                                <label class="status-label click-cursor" :for="'status-' + index">
+                                    <input
+                                        class="click-cursor"
+                                        type="radio"
+                                        name="status"
+                                        :id="'status-' + index"
+                                        :checked="index === 0"
+                                    />
+                                    <span>{{ status }}</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-            <!-- Status -->
-            <div class="filter-status">
-                <span class="filter-heading">Status</span>
-                <div class="container">
-                    <ul class="filter-status__list row">
-                        <li
-                            class="filter-status__item col c-6"
-                            v-for="(status, index) in filterStatus"
-                            :key="status"
-                        >
-                            <label class="status-label click-cursor" :for="'status-' + index">
-                                <input
-                                    class="click-cursor"
-                                    type="radio"
-                                    name="status"
-                                    :id="'status-' + index"
-                                    :checked="index === 0"
-                                />
-                                <span>{{ status }}</span>
-                            </label>
-                        </li>
-                    </ul>
+                <!-- Region -->
+                <div class="filter-region">
+                    <span class="filter-heading">Region</span>
+                    <div class="container">
+                        <ul class="filter-region__list row">
+                            <li
+                                class="filter-region__item col c-6"
+                                v-for="(region, index) in filterRegion"
+                                :key="region"
+                            >
+                                <label class="region-label click-cursor" :for="'region-' + index">
+                                    <input
+                                        class="click-cursor"
+                                        type="checkbox"
+                                        name="regions"
+                                        :id="'region-' + index"
+                                        :checked="index === 0"
+                                    />
+                                    <span>{{ region }}</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
-            <!-- Region -->
-            <div class="filter-region">
-                <span class="filter-heading">Region</span>
-                <div class="container">
-                    <ul class="filter-region__list row">
-                        <li
-                            class="filter-region__item col c-6"
-                            v-for="(region, index) in filterRegion"
-                            :key="region"
-                        >
-                            <label class="region-label click-cursor" :for="'region-' + index">
-                                <input
-                                    class="click-cursor"
-                                    type="checkbox"
-                                    name="regions"
-                                    :id="'region-' + index"
-                                    :checked="index === 0"
-                                />
-                                <span>{{ region }}</span>
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -94,6 +96,7 @@ import '../assets/grid.css'
 export default {
     data() {
         return {
+            isExpanded: true,
             filterStatus: ['All', 'For Sale', 'Not for sale', 'Vacant'],
             filterRegion: [
                 'All',
@@ -114,6 +117,12 @@ export default {
                 'Stefan\'s Lake',
                 'Stillwood Meadow'
             ]
+        }
+    },
+
+    methods: {
+        expandFilter() {
+            this.isExpanded = !this.isExpanded;
         }
     }
 }

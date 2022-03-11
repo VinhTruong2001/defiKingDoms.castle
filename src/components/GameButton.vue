@@ -1,6 +1,6 @@
 <template>
     <button :class="'game-button click-cursor ' + this.class">
-      <span class="title">{{ this.title }}</span>
+      <span class="title">{{ title }}</span>
     </button>
 </template>
 

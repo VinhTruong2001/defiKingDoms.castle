@@ -1,21 +1,21 @@
 <template>
     <div
-        :class="`modal-overlay overlay ${this.isOpen ? 'active' : ''}`"
+        :class="`modal-overlay overlay ${isOpen ? 'active' : ''}`"
     >
         <div class="modal game-border fancy">
             <div
                 class="close-btn click-cursor"
-                @click="this.toggleModal()"
+                @click="toggleModal()"
             ></div>
 
             <h3 class="modal-title">
-                <span>{{ this.title }}</span>
+                <span>{{ title }}</span>
             </h3>
 
             <div class="modal-button-list">
                 <button
                     class="green-button click-cursor"
-                    v-for="btn in this.buttons"
+                    v-for="btn in buttons"
                     :key="btn.title"
                     @click="btn.click()"
                 >

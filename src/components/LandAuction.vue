@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="`land-auction overlay ${this.isOpen ? 'active' : ''}`"
+        :class="`land-auction overlay ${isOpen ? 'active' : ''}`"
     >
         <!-- Filter -->
         <land-filter />
@@ -9,7 +9,7 @@
         <div class="land-view game-border fancy">
             <div
                 class="close-btn click-cursor"
-                @click="this.toggle()"
+                @click="toggle()"
             ></div>
         </div>
     </div>
