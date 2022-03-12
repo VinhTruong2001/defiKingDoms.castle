@@ -6,20 +6,27 @@
         <land-filter />
 
         <!-- Land display -->
-        <div class="land-view col c-12 l-8 game-border fancy">
-            <div
-                class="close-btn click-cursor"
-                @click="toggle()"
-            ></div>
-        </div>
+        <land-view
+            :closeLandAuction="() => toggle()"
+            :action="action"
+            :lands="[]"
+        />
     </div>
 </template>
 
 <script>
 import LandFilter from './LandFilter.vue';
+import LandView from './LandView.vue';
+
 
 export default {
-  components: { LandFilter },
+    props: ['action'],
+
+    components: {
+      LandFilter,
+      LandView,
+    },
+
     data() {
         return {
             isOpen: false,
@@ -50,10 +57,6 @@ export default {
     opacity: 1;
     will-change: opacity;
     transition: all 0.5s linear;
-}
-
-.land-view {
-    height: 100%;
 }
 
 @media (max-width: 1024px) {

@@ -354,6 +354,15 @@ li {
   background-repeat: no-repeat;
 }
 
+hr {
+  width: 100%;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-bottom: 1px solid rgba(62, 31, 5, 0.1);
+  margin: 1em 0 0;
+}
+
 @media (max-width: 376px) {
   .fire-wrap,
   .hall-light-wrap,

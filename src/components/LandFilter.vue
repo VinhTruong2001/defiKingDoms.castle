@@ -343,15 +343,6 @@ export default {
     z-index: 1;
 }
 
-hr {
-    width: 100%;
-    display: block;
-    height: 1px;
-    border: 0;
-    border-bottom: 1px solid rgba(62,31,5,.1);
-    margin: 1em 0 0;
-}
-
 @media (max-width: 1024px) {
     .filter {
         height: 20%;

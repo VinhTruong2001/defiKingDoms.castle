@@ -87,17 +87,24 @@
             :buttons="[
                 {
                     title: 'View All Land',
-                    click: () => this.$refs.landAuction.toggle(),
+                    click: () => {
+                        this.$refs.landAuction.toggle();
+                        this.action = 0
+                    },
                 },
                 {
                     title: 'Buy Land',
-                    click: () => {},
+                    click: () => {
+                        this.$refs.landAuction.toggle();
+                        this.action = 1
+                    },
                 },
             ]"
         />
 
         <land-auction
             ref="landAuction"
+            :action="action"
         />
     </div>
 </template>
@@ -128,6 +135,7 @@ export default {
             stopPosition: {x: 0, y: 0},
             resetInterval: 0,
             resetTimeout: 0,
+            action: -1,
         }
     },
 
