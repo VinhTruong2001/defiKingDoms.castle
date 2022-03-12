@@ -1,15 +1,29 @@
 <template>
-    <div class="filter game-border basic">
-        <template v-if="isExpanded">
+    <div
+        class="filter col c-12 m-6 l-4"
+        :class="!isExpanded ? '' : 'active'"
+    >
+        <div
+            class="filter-expanded game-border basic"
+            v-if="isMobile || isExpanded"
+        >
             <!-- Header -->
             <div class="filter-header">
                 <div class="filter-header-group">
                     <span>Filter</span>
-                    <div class="filter-toggle-btn click-cursor">
-                        <i class="fas fa-angle-left"></i>
+                    <div
+                        class="filter-toggle-btn click-cursor"
+                        @click="expandFilter()"
+                    >
+                        <i v-if="!isMobile" class="fas fa-angle-left"></i>
+                        <i v-if="isMobile && !isExpanded" class="fas fa-caret-down"></i>
+                        <i v-if="isMobile && isExpanded" class="fas fa-caret-up"></i>
                     </div>
                 </div>
-                <div class="filter-header-group">
+                <div
+                    v-if="isExpanded"
+                    class="filter-header-group"
+                >
                     <button
                         class="green-button click-cursor filter-btn"
                     >
@@ -26,7 +40,10 @@
             <hr>
 
             <!-- Body -->
-            <div class="filter-body">
+            <div
+                class="filter-body"
+                v-if="isExpanded"
+            >
                 <!-- Search -->
                 <div class="filter-search">
                     <input
@@ -86,7 +103,19 @@
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
+
+        <div
+            class="filter-shrink game-border basic"
+             v-if="!isExpanded && !isMobile"
+        >
+            <div
+                class="filter-expand-btn click-cursor"
+                @click="expandFilter()"
+            >
+                <i class="fas fa-sliders-h"></i>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -97,6 +126,7 @@ export default {
     data() {
         return {
             isExpanded: true,
+            isMobile: false,
             filterStatus: ['All', 'For Sale', 'Not for sale', 'Vacant'],
             filterRegion: [
                 'All',
@@ -116,13 +146,25 @@ export default {
                 'Riverhold',
                 'Stefan\'s Lake',
                 'Stillwood Meadow'
-            ]
+            ],
+        }
+    },
+
+    mounted() {
+        if (screen.width < 1025) {
+            this.isMobile = true;
+        } else {
+            this.isMobile = false;
         }
     },
 
     methods: {
         expandFilter() {
             this.isExpanded = !this.isExpanded;
+        },
+
+        onResize() {
+            this.windowWidth = window.innerWidth;
         }
     }
 }
@@ -130,10 +172,29 @@ export default {
 
 <style scoped>
 .filter {
-    flex: 0.25;
     height: 100%;
-    margin-right: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filter-expanded {
+    height: 100%;
+    width: 100%;
     padding: 74px 50px 50px;
+}
+
+.filter-shrink {
+    width: 118px;
+    height: 156px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.filter-expand-btn {
+    position: relative;
+    z-index: 1;
+    font-size: 20px;
 }
 
 .filter-header-group {
@@ -143,6 +204,7 @@ export default {
     z-index: 1;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .filter-toggle-btn {
@@ -289,4 +351,22 @@ hr {
     border-bottom: 1px solid rgba(62,31,5,.1);
     margin: 1em 0 0;
 }
+
+@media (max-width: 1024px) {
+    .filter {
+        height: 20%;
+        margin-bottom: 15px;
+    }
+    .filter.active {
+        height: auto;
+    }
+}
+
+@media (max-width: 376px) {
+    .filter {
+        height: 25%;
+    }
+
+}
+
 </style>

@@ -1,12 +1,12 @@
 <template>
     <div
-        :class="`land-auction overlay ${isOpen ? 'active' : ''}`"
+        :class="`land-auction overlay row ${isOpen ? 'active' : ''}`"
     >
         <!-- Filter -->
         <land-filter />
 
         <!-- Land display -->
-        <div class="land-view game-border fancy">
+        <div class="land-view col c-12 l-8 game-border fancy">
             <div
                 class="close-btn click-cursor"
                 @click="toggle()"
@@ -53,24 +53,13 @@ export default {
 }
 
 .land-view {
-    flex: 0.75;
     height: 100%;
 }
 
-@media (max-width: 376px) {
+@media (max-width: 1024px) {
     .land-auction {
-        flex-direction: column;
-    }
-
-    .filter {
-        flex: 1;
-        height: unset;
-        margin: 0;
-    }
-
-    .land-view {
-        flex: 1;
-        height: unset;
+        margin-bottom: 0;
+        align-items: unset;
     }
 }
 </style>
