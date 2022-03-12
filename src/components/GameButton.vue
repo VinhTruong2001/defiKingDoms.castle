@@ -32,7 +32,7 @@ export default {
 .title {
   font-size: 3.5px;
   font-weight: 600;
-  font-family: Lora, serif;
+  font-family: "Lora", Georgia,serif;
   color: #000;
   padding: 0 3px;
   margin: auto;

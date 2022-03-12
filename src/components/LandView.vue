@@ -48,12 +48,21 @@
         <hr>
 
         <!-- Land List -->
-
+        <land-list
+            :lands="lands"
+            :action="action"
+        />
     </div>
 </template>
 
 <script>
+import LandList from './LandList.vue'
+
 export default {
+    components: {
+        LandList,
+    },
+
     props: [
         'closeLandAuction',
         'action',
@@ -77,7 +86,9 @@ export default {
 <style scoped>
 .land-view-container {
     height: 100%;
-    padding: 50px 75px 30px;
+    padding: 50px 75px 60px;
+    display: flex;
+    flex-direction: column;
 }
 
 .land-view__heading {
@@ -158,7 +169,7 @@ export default {
 
 @media (max-width: 1024px) {
     .land-view-container {
-        padding: 115px 55px 30px;
+        padding: 115px 55px 70px;
     }
 
     .summry-sort-land,
@@ -173,6 +184,7 @@ export default {
     }
 
     .land-sort {
+
     }
 
     #landPropertyLabel {
@@ -195,7 +207,10 @@ export default {
 }
 
 @media (max-width: 376px) {
-
+    .land-view-container {
+        height: 900px;
+        padding: 115px 55px 70px;
+    }
 }
 
 </style>

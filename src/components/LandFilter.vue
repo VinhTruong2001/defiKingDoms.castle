@@ -41,7 +41,7 @@
 
             <!-- Body -->
             <div
-                class="filter-body"
+                class="filter-body game-scroll-bar"
                 v-if="isExpanded"
             >
                 <!-- Search -->
@@ -151,7 +151,7 @@ export default {
     },
 
     mounted() {
-        if (screen.width < 1025) {
+        if (screen.width < 376) {
             this.isMobile = true;
         } else {
             this.isMobile = false;
@@ -180,7 +180,7 @@ export default {
 .filter-expanded {
     height: 100%;
     width: 100%;
-    padding: 74px 50px 50px;
+    padding: 74px 50px 88px;
 }
 
 .filter-shrink {
@@ -220,31 +220,11 @@ export default {
 
 .filter-body {
     position: relative;
-    height: calc(100% - 130px);
+    height: calc(100% - 100px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0 3px 3px;
     margin: 1em 0 0;
-}
-
-.filter-body::-webkit-scrollbar {
-    width: 6px;
-    padding: 3px 0;
-}
-
-.filter-body::-webkit-scrollbar-track {
-    background-color: #eecba1;
-    width: 4px;
-    border-radius: 6px;
-    border: 2px solid #eccca4;
-}
-
-.filter-body::-webkit-scrollbar-thumb {
-    background-color: #ffe3bc;
-    border-radius: 16px;
-    margin: 2px 0;
-    width: 6px;
-    border-radius: 16px;
 }
 
 .filter-search {
@@ -346,7 +326,6 @@ export default {
 @media (max-width: 1024px) {
     .filter {
         height: 20%;
-        margin-bottom: 15px;
     }
     .filter.active {
         height: auto;
@@ -356,6 +335,7 @@ export default {
 @media (max-width: 376px) {
     .filter {
         height: 25%;
+        margin-bottom: 15px;
     }
 
 }

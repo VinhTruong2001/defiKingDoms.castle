@@ -368,19 +368,19 @@ hr {
   margin: 1em 0 0;
 }
 
-::-webkit-scrollbar {
+.game-scroll-bar::-webkit-scrollbar {
   width: 6px;
   padding: 3px 0;
 }
 
-::-webkit-scrollbar-track {
+.game-scroll-bar::-webkit-scrollbar-track {
   background-color: #eecba1;
   width: 4px;
   border-radius: 6px;
   border: 2px solid #eccca4;
 }
 
-::-webkit-scrollbar-thumb {
+.game-scroll-bar::-webkit-scrollbar-thumb {
   background-color: #ffe3bc;
   border-radius: 16px;
   margin: 2px 0;

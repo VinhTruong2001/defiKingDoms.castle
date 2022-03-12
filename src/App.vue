@@ -83,24 +83,29 @@
 
         <modal
             ref="landAuctionModal"
-            title="Land Auction"
-            :buttons="[
-                {
-                    title: 'View All Land',
-                    click: () => {
-                        this.$refs.landAuction.toggle();
-                        this.action = 0
-                    },
-                },
-                {
-                    title: 'Buy Land',
-                    click: () => {
-                        this.$refs.landAuction.toggle();
-                        this.action = 1
-                    },
-                },
-            ]"
-        />
+            fancyTitle="Land Auction"
+            height="316"
+            width="600"
+        >
+            <button
+                class="green-button click-cursor"
+                @click="() => {
+                    this.$refs.landAuction.toggle();
+                    this.action = 0
+                }"
+            >
+                View All Land
+            </button>
+            <button
+                class="green-button click-cursor"
+                @click="() => {
+                    this.$refs.landAuction.toggle();
+                    this.action = 1
+                }"
+            >
+                Buy Land
+            </button>
+        </modal>
 
         <land-auction
             ref="landAuction"
