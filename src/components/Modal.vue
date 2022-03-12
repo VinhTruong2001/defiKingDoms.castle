@@ -1,26 +1,30 @@
 <template>
     <div
+        v-if="isOpen"
         :class="`modal-overlay overlay ${isOpen ? 'active' : ''}`"
     >
-        <div class="modal game-border fancy">
+        <div
+            class="modal game-border fancy"
+            :style="{
+                width: width + 'px',
+                height: height + 'px',
+            }"
+        >
             <div
                 class="close-btn click-cursor"
                 @click="toggleModal()"
             ></div>
 
-            <h3 class="modal-title">
+            <h3 class="modal-title fancy" v-if="fancyTitle">
+                <span>{{ fancyTitle }}</span>
+            </h3>
+
+            <h3 class="modal-title basic" v-if="title">
                 <span>{{ title }}</span>
             </h3>
 
-            <div class="modal-button-list">
-                <button
-                    class="green-button click-cursor"
-                    v-for="btn in buttons"
-                    :key="btn.title"
-                    @click="btn.click()"
-                >
-                    {{ btn.title }}
-                </button>
+            <div class="modal-body">
+                <slot></slot>
             </div>
 
         </div>
@@ -29,7 +33,13 @@
 
 <script>
 export default {
-    props: ['title', 'buttons'],
+    props: [
+        'fancyTitle',
+        'title',
+        'buttons',
+        'width',
+        'height',
+    ],
 
     data() {
         return {
@@ -62,14 +72,24 @@ export default {
 
 .modal {
     margin: auto;
-    width: 600px;
-    height: 250px;
+    padding: 50px 50px 70px;
 }
 
 .modal-title {
-    position: relative;
-    top: 10px;
+    color: #764d43;
     text-align: center;
+    margin-bottom: 0;
+}
+
+.modal-title.basic {
+    font-size: 28px;
+    font-family: "Lora",Georgia,serif;
+    font-weight: 400;
+}
+
+.modal-title.fancy {
+    position: relative;
+    top: -42px;
     font-size: 16px;
     margin-top: 30px;
     color: #764d43;
@@ -83,7 +103,7 @@ export default {
     justify-content: center;
 }
 
-.modal-title::before {
+.modal-title.fancy::before {
     content: "";
     position: absolute;
     display: block;
@@ -97,25 +117,20 @@ export default {
     background-position: 0 0,100% 0;
 }
 
-.modal-button-list {
+.modal-body {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 30px;
-}
-
-.modal-button-list button {
-    min-width: 200px;
-    margin: 5px 0;
 }
 
 @media (max-width: 376px) {
     .modal {
         width: 100vw;
-        height: 350px;
     }
 
-    .modal-title {
+    .modal-title.fancy {
         width: 90px;
     }
 
@@ -124,10 +139,6 @@ export default {
         right: 28px;
         width: 48px;
         height: 48px;
-    }
-
-    .modal-button-list {
-        margin-top: 60px;
     }
 
     .modal-button {
