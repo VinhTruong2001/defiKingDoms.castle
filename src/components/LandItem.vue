@@ -11,7 +11,7 @@
                 >
                     <div
                         class="green-button land-sale-tag"
-                        v-if="land.isForSale"
+                        v-if="land.status === 0"
                     >
                         For sale
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div
                         class="land-info__row"
-                        v-if="land.isForSale && action === 0"
+                        v-if="land.status === 0 && action === 0"
                         style="font-weight: bold"
                     >
                         <p>For sale</p>
@@ -46,7 +46,7 @@
                     </div>
                     <div
                         class="land-info__row"
-                        v-if="!land.isForSale && action === 0"
+                        v-if="land.status !== 0 && action === 0"
                     >
                         <p>Not for sale</p>
                     </div>
@@ -159,7 +159,7 @@ export default {
 
 <style scoped>
 .land-item {
-    height: 442px;
+    height: 462px;
     background-color: #eecba1;
     margin-bottom: 15px;
     padding: 16px 16px 24px;

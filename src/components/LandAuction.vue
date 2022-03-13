@@ -3,13 +3,22 @@
         :class="`land-auction overlay row ${isOpen ? 'active' : ''}`"
     >
         <!-- Filter -->
-        <land-filter />
+        <land-filter
+            :selectedStatus="filterStatus"
+            :selectedRegions="filterRegions"
+            @updateFilterStatus="onUpdateFilterStatus"
+            @updateFilterRegion="onUpdateFilterRegions"
+            @updateFilterSearchId="onUpdateFilterSearchId"
+            @applyFilter="filterLand"
+
+        />
 
         <!-- Land display -->
         <land-view
             :closeLandAuction="() => toggle()"
             :action="action"
-            :lands="filterLandBaseOnAction()"
+            :lands="filteredLands"
+            :key="filteredLands"
         />
     </div>
 </template>
@@ -36,7 +45,7 @@ export default {
                     name: 'Land 1',
                     region: 0,
                     level: 1,
-                    isForSale: false,
+                    status: 1, // 0: for sale, 1: not for sale, 2: vacant
                     price: 0,
                     owner: {
                         name: 'User 1',
@@ -48,7 +57,7 @@ export default {
                     name: 'Land 2',
                     region: 0,
                     level: 1,
-                    isForSale: false,
+                    status: 1,
                     price: 0,
                     owner: {
                         name: 'User 2',
@@ -60,7 +69,7 @@ export default {
                     name: 'Land 3',
                     region: 1,
                     level: 1,
-                    isForSale: true,
+                    status: 0,
                     price: 300000,
                     owner: {
                         name: 'User 3',
@@ -72,7 +81,7 @@ export default {
                     name: 'Land 4',
                     region: 1,
                     level: 1,
-                    isForSale: true,
+                    status: 0,
                     price: 400000,
                     owner: {
                         name: 'User 4',
@@ -84,14 +93,28 @@ export default {
                     name: 'Land 5',
                     region: 2,
                     level: 1,
-                    isForSale: false,
+                    status: 1,
                     price: 0,
                     owner: {
                         name: 'User 5',
                         walletAddress: '0x000000000000000000000000000000000005',
                     }
                 },
-            ]
+            ],
+            filterSearchId: '',
+            filterStatus: -1,
+            filterRegions: [],
+            filteredLands: [],
+        }
+    },
+
+    beforeMount() {
+        this.filterLand();
+    },
+
+    watch: {
+        action() {
+            this.filterLand();
         }
     },
 
@@ -100,12 +123,46 @@ export default {
             this.isOpen = !this.isOpen;
         },
 
-        filterLandBaseOnAction() {
-            if (this.action === 0) return this.lands
+        filterLand() {
+            this.filteredLands = [...this.lands]
 
-            return this.lands.filter(land => land.isForSale)
+            if (this.action === 1)  {
+                this.filteredLands = this.filteredLands.filter(land => land.status == 0)
+            }
+
+            if (this.filterSearchId !== '') {
+                this.filteredLands = this.filteredLands.filter(land => land.id === parseInt(this.filterSearchId, 10))
+            }
+
+            if (this.filterStatus != -1) {
+                this.filteredLands = this.filteredLands.filter(land => land.status == this.filterStatus)
+            }
+
+            if (this.filterRegions.length !== 0) {
+                let temp = [];
+                this.filterRegions.forEach(region => {
+                    temp = [...temp, ...this.filteredLands.filter(land => land.region == region)]
+                })
+                console.log(temp)
+
+                this.filteredLands = [...temp];
+            }
+
+            console.log(this.filteredLands)
+        },
+
+        onUpdateFilterStatus(status) {
+            this.filterStatus = status;
+        },
+
+        onUpdateFilterRegions(regions) {
+            this.filterRegions = [...regions];
+        },
+
+        onUpdateFilterSearchId(id) {
+            this.filterSearchId = id
         }
-    }
+    },
 }
 </script>
 

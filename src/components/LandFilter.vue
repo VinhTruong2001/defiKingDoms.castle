@@ -26,12 +26,14 @@
                 >
                     <button
                         class="green-button click-cursor filter-btn"
+                        @click="$emit('applyFilter')"
                     >
                         Apply
                     </button>
 
                     <button
                         class="green-button click-cursor filter-btn"
+                        @click="resetFilter"
                     >
                         Reset
                     </button>
@@ -47,9 +49,11 @@
                 <!-- Search -->
                 <div class="filter-search">
                     <input
+                        v-model="landSearchId"
                         type="text"
                         class="filter-search-input"
                         placeholder="Search by Land ID"
+                        @change="$emit('updateFilterSearchId', landSearchId)"
                     >
                 </div>
 
@@ -63,13 +67,15 @@
                                 v-for="(status, index) in filterStatus"
                                 :key="status"
                             >
-                                <label class="status-label click-cursor" :for="'status-' + index">
+                                <label class="status-label click-cursor" :for="`status-${index -1}`">
                                     <input
                                         class="click-cursor"
                                         type="radio"
                                         name="status"
-                                        :id="'status-' + index"
+                                        :value="index - 1"
+                                        :id="`status-${index - 1}`"
                                         :checked="index === 0"
+                                        @change="(e) => checkFilterStatus(e)"
                                     />
                                     <span>{{ status }}</span>
                                 </label>
@@ -88,13 +94,18 @@
                                 v-for="(region, index) in filterRegion"
                                 :key="region"
                             >
-                                <label class="region-label click-cursor" :for="'region-' + index">
+                                <label
+                                    class="region-label click-cursor"
+                                    :for="`region-${index - 1}`"
+                                >
                                     <input
-                                        class="click-cursor"
+                                        class="click-cursor region-checkbox"
                                         type="checkbox"
                                         name="regions"
-                                        :id="'region-' + index"
+                                        :id="`region-${index - 1}`"
                                         :checked="index === 0"
+                                        :value="index - 1"
+                                        @change="(e) => checkFilterRegion(e)"
                                     />
                                     <span>{{ region }}</span>
                                 </label>
@@ -123,6 +134,11 @@
 import '../assets/grid.css'
 
 export default {
+    props: {
+        selectedStatus: Function,
+        selectedRegions: Function,
+    },
+
     data() {
         return {
             isExpanded: true,
@@ -147,6 +163,8 @@ export default {
                 'Stefan\'s Lake',
                 'Stillwood Meadow'
             ],
+            tempSelectedRegions: [],
+            landSearchId: "",
         }
     },
 
@@ -165,6 +183,52 @@ export default {
 
         onResize() {
             this.windowWidth = window.innerWidth;
+        },
+
+        checkFilterRegion(e) {
+            const filterCheckBoxes = document.querySelectorAll('.region-checkbox');
+
+            if (e.target.value === '-1') {
+                if (e.target.checked) {
+                    this.tempSelectedRegions = [];
+                    Array.from(filterCheckBoxes).forEach((checkbox, index) => {
+                        if (index !== 0)
+                            checkbox.checked = false
+                    });
+                } else {
+                    e.target.checked = true;
+                }
+            } else {
+                const checkBoxFilted = Array.from(filterCheckBoxes).filter(checkBox => checkBox.checked);
+                document.querySelector('#region--1').checked = checkBoxFilted.length === 0;
+
+                if (e.target.checked) {
+                    this.tempSelectedRegions.push(e.target.value);
+                } else {
+                    for(let i = 0; i < this.tempSelectedRegions.length; i++) {
+                        if ( this.tempSelectedRegions[i] === e.target.value) {
+                            this.tempSelectedRegions.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+            }
+
+            this.$emit('updateFilterRegion', this.tempSelectedRegions)
+        },
+
+        checkFilterStatus(e) {
+            if (e.target.checked) {
+                this.$emit('updateFilterStatus', e.target.value)
+            }
+        },
+
+        resetFilter() {
+            document.querySelector('#region--1').click();
+            document.querySelector('#status--1').click();
+
+            this.landSearchId = "";
+            this.$emit('applyFilter')
         }
     }
 }
