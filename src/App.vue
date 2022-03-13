@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div
             ref="castleOverlay"
             class="castle-overlay overlay"
@@ -151,7 +150,7 @@ export default {
             this.holdEvent(e.clientX, e.clientY);
         })
 
-        castleOverlay.addEventListener('mouseup', () => {
+        window.addEventListener('mouseup', () => {
             this.releaseEvent();
         })
 
@@ -176,7 +175,7 @@ export default {
         const castleOverlay = this.$refs.castleOverlay;
 
         castleOverlay.removeEventListener('mousemove', ()=>{});
-        castleOverlay.removeEventListener('mouseup', ()=>{});
+        window.removeEventListener('mouseup', ()=>{});
         castleOverlay.removeEventListener('mousedown', ()=>{});
         castleOverlay.removeEventListener('touchstart', ()=>{});
         castleOverlay.removeEventListener('touchend', ()=>{});
@@ -223,9 +222,9 @@ export default {
 
             this.resetInterval = setInterval(() => {
                 if (this.distance.x !== 0) {
-                    this.distance.x = this.distance.x < 0 ? this.distance.x + 2 : this.distance.x - 2;
+                    this.distance.x = this.distance.x < 0 ? this.distance.x + 4 : this.distance.x - 4;
 
-                    if (this.distance.x <= 2 && this.distance.x >= -2) {
+                    if (this.distance.x <= 4 && this.distance.x >= -4) {
                         this.distance.x = 0;
                     }
                 }
@@ -234,7 +233,7 @@ export default {
 
                 if (this.scale < 1.5) {
                     if (this.distance.y !== 0) {
-                        this.distance.y = this.distance.y < 0 ? this.distance.y + 2 : this.distance.y - 2;
+                        this.distance.y = this.distance.y < 0 ? this.distance.y + 4 : this.distance.y - 4;
 
                         if (this.distance.y <= 2 && this.distance.y >= -2) {
                             this.distance.y = 0;
@@ -242,7 +241,7 @@ export default {
                     }
                 } else {
                     if (this.distance.y <= -resetPoint || this.distance.y >= resetPoint) {
-                        this.distance.y = this.distance.y < 0 ? this.distance.y + 2 : this.distance.y - 2;
+                        this.distance.y = this.distance.y < 0 ? this.distance.y + 4 : this.distance.y - 4;
                     }
                 }
 
