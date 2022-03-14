@@ -64,10 +64,14 @@
                         <div class="jester"></div>
                     </div>
 
-                    <game-button
-                        title="Jester Grandle"
-                        class="jester-grandle-btn"
-                    />
+                    <div
+                        class="jester-grandle-btn click-cursor"
+                        @click="this.$refs.jesterModal.toggleModal()"
+                    >
+                        <game-button
+                            title="Jester Grandle"
+                        />
+                    </div>
                 </div>
 
                 <!-- Land Auctions -->
@@ -105,6 +109,16 @@
                 Buy Land
             </button>
         </modal>
+
+        <modal
+            ref="jesterModal"
+            fancyTitle="The Jester"
+            height="264"
+            width="700"
+            :disabled="true"
+            :npcDialogue="'Ho there! Looking for adventure, fun, or a bit of both? I know a place not far from here. It\'s not quite ready yet, but be sure to come back in a few weeks, I\'m sure it\'ll be an interesting place for you to visit, hehehe!'"
+            :npcName="'Jester Grandle'"
+        />
 
         <land-auction
             ref="landAuction"

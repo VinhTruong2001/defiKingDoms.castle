@@ -8,6 +8,7 @@
             :style="{
                 width: width + 'px',
                 height: height + 'px',
+                marginBottom: (npcDialogue ? 30 : 0) + 'px',
             }"
         >
             <div
@@ -27,7 +28,25 @@
                 <slot></slot>
             </div>
 
+            <div class="coming-soon__wrap" v-if="disabled">
+                <div class="coming-soon">
+                    <span>Coming Soon</span>
+                </div>
+            </div>
         </div>
+
+         <div
+            class="npc-dialogue"
+            v-if="npcDialogue"
+            :style="{
+                width: width + 'px',
+            }"
+        >
+                <h4 class="npc-name">
+                    <span>{{ npcName }}</span>
+                </h4>
+                <p>{{ npcDialogue }}</p>
+            </div>
     </div>
 </template>
 
@@ -39,6 +58,9 @@ export default {
         'buttons',
         'width',
         'height',
+        'disabled',
+        'npcDialogue',
+        'npcName'
     ],
 
     data() {
@@ -61,6 +83,8 @@ export default {
     opacity: 0;
     will-change: opacity;
     transition: all 0.5s linear;
+    flex-direction: column;
+    align-items: center;
 }
 
 .modal-overlay.active {
@@ -71,7 +95,6 @@ export default {
 }
 
 .modal {
-    margin: auto;
     padding: 50px 50px 70px;
 }
 
@@ -125,13 +148,130 @@ export default {
     align-items: center;
 }
 
+.coming-soon__wrap {
+    width: 100%;
+    pointer-events: none;
+}
+
+.coming-soon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 300px;
+    margin: 6px auto;
+    height: 68px;
+    max-height: 68px;
+    image-rendering: pixelated;
+    background-image: url('../assets/images/borders/btn-middle-inactive.png');
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: "Lora",sans-serif;
+    color: #744e45;
+}
+
+.coming-soon::before {
+    content: "";
+    display: block;
+    width: calc(100% + 80px);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: -40px;
+    background-image: url('../assets/images/borders/btn-left-inactive.png'),
+        url('../assets/images/borders/btn-right-inactive.png');
+    background-repeat: no-repeat;
+    background-position: 0 0,100% 0;
+}
+
+.npc-dialogue {
+    position: relative;
+    padding: 56px 40px 36px;
+    image-rendering: pixelated;
+    background-color: #ffe3bd;
+    background-image: url('../assets/images/borders/npcDialogue-left.png'),
+        url('../assets/images/borders/npcDialogue-right.png'),
+        url('../assets/images/borders/npcDialogue-top.png'),
+        url('../assets/images/borders/npcDialogue-bottom.png')
+    ;
+    background-repeat: repeat-y,repeat-y,repeat-x,repeat-x;
+    background-position: 0 0,100% 0,0 0,0 100%;
+    border-radius: 25px
+}
+
+.npc-dialogue::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('../assets/images/borders/npcDialogue-top-left.png'),
+        url('../assets/images/borders/npcDialogue-top-right.png'),
+        url('../assets/images/borders/npcDialogue-bottom-left.png'),
+        url('../assets/images/borders/npcDialogue-bottom-right.png')
+    ;
+    background-repeat: no-repeat;
+    background-position: 0 0,100% 0,0 100%,100% 100%;
+}
+
+.npc-dialogue p {
+    margin: 0;
+    font-size: 16px;
+    color: #744e45;
+}
+
+.npc-name {
+    position: absolute;
+    top: -18px;
+    left: 80px;
+    margin: 0;
+    background-image:  url('../assets/images/borders/npcName-middle.png');
+    background-repeat: repeat-x;
+    height: 58px;
+    line-height: 58px;
+    padding: 0 20px;
+    white-space: nowrap;
+}
+
+.npc-name span {
+    position: relative;
+    font-family: "Lora",Georgia,serif;
+    color: #744e45;
+    font-size: 26px;
+
+}
+
+.npc-name::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: calc(100% + 60px);
+    top: 0;
+    left: -30px;
+    height: 100%;
+    background-image: url('../assets/images/borders/npcName-left.png'),
+        url('../assets/images/borders/npcName-right.png');
+    background-repeat: no-repeat;
+    background-position: 0 0,100% 0;
+}
+
 @media (max-width: 376px) {
-    .modal {
-        width: 100vw;
+    .modal,
+    .npc-dialogue {
+        width: 100vw !important;
     }
 
     .modal-title.fancy {
-        width: 90px;
+        top: 17px;
+    }
+
+    .modal-body {
+        top: 38px;
     }
 
     .close-btn {
@@ -146,6 +286,11 @@ export default {
         width: 200px;
         height: 41px;
         font-size: 14px;
+    }
+
+    .coming-soon {
+        width: 200px;
+        top: 14px;
     }
 }
 </style>

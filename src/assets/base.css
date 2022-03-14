@@ -241,8 +241,11 @@ li {
 }
 
 .jester-grandle-btn {
+  position: absolute;
   top: -9px;
   right: -11px;
+  height: 30px;
+  width: 33px;
 }
 
 .close-btn {
