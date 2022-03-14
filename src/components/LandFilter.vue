@@ -26,7 +26,7 @@
                 >
                     <button
                         class="green-button click-cursor filter-btn"
-                        @click="$emit('applyFilter')"
+                        @click="applyFilter"
                     >
                         Apply
                     </button>
@@ -181,10 +181,6 @@ export default {
             this.isExpanded = !this.isExpanded;
         },
 
-        onResize() {
-            this.windowWidth = window.innerWidth;
-        },
-
         checkFilterRegion(e) {
             const filterCheckBoxes = document.querySelectorAll('.region-checkbox');
 
@@ -220,6 +216,14 @@ export default {
         checkFilterStatus(e) {
             if (e.target.checked) {
                 this.$emit('updateFilterStatus', e.target.value)
+            }
+        },
+
+        applyFilter() {
+            this.$emit('applyFilter')
+
+            if (window.innerWidth < 376) {
+                this.expandFilter();
             }
         },
 

@@ -221,15 +221,43 @@ export default {
             clearTimeout(this.scrollTimeout);
 
             this.resetInterval = setInterval(() => {
-                if (this.distance.x !== 0) {
-                    this.distance.x = this.distance.x < 0 ? this.distance.x + 4 : this.distance.x - 4;
+                const deviceWidth = window.innerWidth
 
-                    if (this.distance.x <= 4 && this.distance.x >= -4) {
-                        this.distance.x = 0;
+                let resetPointX = this.scale * 50;
+
+                if (deviceWidth < 1025) {
+                    resetPointX = this.scale * 120
+                } else if (deviceWidth < 769) {
+                    resetPointX = this.scale * 250
+                } else if (deviceWidth < 376) {
+                    resetPointX = this.scale * 150
+                }
+
+                if (
+                    (this.scale < 1.5 && deviceWidth < 376) ||
+                    (this.scale < 2 && deviceWidth < 1025) ||
+                    deviceWidth >= 1025
+
+                ) {
+                    if (this.distance.x !== 0) {
+                        this.distance.x = this.distance.x < 0 ? this.distance.x + 4 : this.distance.x - 4;
+
+                        if (this.distance.x <= 2 && this.distance.x >= -2) {
+                            this.distance.x = 0;
+                        }
+                    }
+                } else  {
+                    if (this.distance.x <= -resetPointX || this.distance.x >= resetPointX) {
+                        this.distance.x = this.distance.x < 0 ? this.distance.x + 4 : this.distance.x - 4;
                     }
                 }
 
-                const resetPoint = this.scale * 200;
+                let resetPointY = this.scale * 300;
+                if (deviceWidth < 1025) {
+                    resetPointY = this.scale * 100
+                } else if (deviceWidth < 376) {
+                    resetPointY = this.scale * 50;
+                }
 
                 if (this.scale < 1.5) {
                     if (this.distance.y !== 0) {
@@ -240,14 +268,14 @@ export default {
                         }
                     }
                 } else {
-                    if (this.distance.y <= -resetPoint || this.distance.y >= resetPoint) {
+                    if (this.distance.y <= -resetPointY || this.distance.y >= resetPointY) {
                         this.distance.y = this.distance.y < 0 ? this.distance.y + 4 : this.distance.y - 4;
                     }
                 }
 
                 if (
-                    this.distance.x === 0 &&
-                    (this.scale < 1.5 ? this.distance.y === 0 : Math.abs(this.distance.y) === resetPoint)
+                    (this.scale < 1.5 ? this.distance.x === 0 : Math.abs(this.distance.x) === resetPointX) &&
+                    (this.scale < 1.5 ? this.distance.y === 0 : Math.abs(this.distance.y) === resetPointY)
                 ) {
                     clearInterval(this.resetInterval)
                     this.isReseting = false;
@@ -290,7 +318,11 @@ export default {
             this.distance.y = y - this.currentPosition.y + (this.isReseting ?  this.stopPosition.y : 0);
 
 
-            const limit = 500 * this.scale;
+            let limit = 500 * this.scale;
+
+            if (window.innerWidth < 376) {
+                limit = 200 * this.scale;
+            }
 
             if (this.distance.x >= limit) {
                 this.distance.x = limit

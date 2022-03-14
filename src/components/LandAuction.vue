@@ -143,12 +143,9 @@ export default {
                 this.filterRegions.forEach(region => {
                     temp = [...temp, ...this.filteredLands.filter(land => land.region == region)]
                 })
-                console.log(temp)
 
                 this.filteredLands = [...temp];
             }
-
-            console.log(this.filteredLands)
         },
 
         onUpdateFilterStatus(status) {
