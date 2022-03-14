@@ -25,19 +25,31 @@
                     class="land-select__list"
                     id="landPropertyLabel"
                 >
-                    <select class="click-cursor" name="landProperty" id="landProperty">
+                    <select
+                        v-model="landPropertySort"
+                        class="click-cursor"
+                        name="landProperty"
+                        id="landProperty"
+                        @change="sortLand"
+                    >
                         <option value="0">ID</option>
                         <option value="1">Name</option>
                         <option value="2">Region</option>
                         <option value="3">Level</option>
-                        <option value="4" selected>Sale Price</option>
+                        <option value="4">Sale Price</option>
                     </select>
                 </div>
 
                 <div
                     class="land-select__list"
                 >
-                    <select class="click-cursor" name="sortType" id="sortType">
+                    <select
+                        v-model="landSortType"
+                        class="click-cursor"
+                        name="sortType"
+                        id="sortType"
+                        @change="sortLand"
+                    >
                         <option value="0">Ascending</option>
                         <option value="1">Descending</option>
                     </select>
@@ -51,6 +63,7 @@
         <land-list
             :lands="lands"
             :action="action"
+            :key="lands"
         />
     </div>
 </template>
@@ -71,13 +84,52 @@ export default {
 
     data() {
         return {
-
+            landPropertySort: '4',
+            landSortType: '0'
         }
+    },
+
+    beforeMount() {
+        this.sortLand();
     },
 
     methods: {
         getTitle() {
             return this.action === 0 ? 'View All Land' : 'Buy Land'
+        },
+
+        sortLand() {
+            switch (this.landPropertySort) {
+                case '0':
+                    this.lands.sort((a, b) => {
+                        return a.id - b.id;
+                    })
+                    break;
+                 case '1':
+                    this.lands.sort((a, b) => {
+                        return a.name - b.name;
+                    })
+                    break;
+                 case '2':
+                    this.lands.sort((a, b) => {
+                        return a.region - b.region;
+                    })
+                    break;
+                case '3':
+                    this.lands.sort((a, b) => {
+                        return a.level - b.level;
+                    })
+                    break;
+                 case '4':
+                    this.lands.sort((a, b) => {
+                        return a.price - b.price;
+                    })
+                    break;
+            }
+
+            if (this.landSortType == 0) {
+                this.lands.reverse();
+            }
         }
     }
 }
