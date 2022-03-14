@@ -53,8 +53,8 @@ li {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  width: 555px;
-  height: 585px;
+  min-width: 555px;
+  min-height: 585px;
   transition: all 0s;
   transform-origin: center;
 }
@@ -389,69 +389,4 @@ hr {
   margin: 2px 0;
   width: 6px;
   border-radius: 16px;
-}
-
-@media (max-width: 376px) {
-  .fire-wrap,
-  .hall-light-wrap,
-  .torch-wrap,
-  .beast-wrap-1,
-  .beast-wrap-2,
-  .throne-light-wrap,
-  .jester-wrap {
-    transform: scale(0.7);
-  }
-  .fire-wrap-1 {
-    bottom: 179px;
-    right: 87px;
-  }
-  .fire-wrap-2 {
-    bottom: 179px;
-    right: 38px;
-  }
-  .fire-wrap-3 {
-    top: 226px;
-    right: 48px;
-  }
-  .hall-light-wrap {
-    top: 165.5px;
-  }
-  .hall-light-wrap-1 {
-    right: 74px;
-  }
-  .hall-light-wrap-2 {
-    right: 51px;
-  }
-  .hall-light-wrap-3 {
-    right: 28px;
-  }
-  .torch-wrap {
-    top: 131px;
-  }
-  .torch-wrap-1 {
-    right: 64.52px;
-  }
-  .torch-wrap-2 {
-    right: 42.5px;
-  }
-  .beast-wrap-1 {
-    top: 154.4px;
-    left: 45.9px;
-  }
-  .beast-wrap-2 {
-    top: 150px;
-    left: 78.49px;
-  }
-  .throne-light-wrap {
-    top: 198.5px;
-    left: 147.9px;
-  }
-  .jester-container {
-    bottom: 183px;
-    left: 107px;
-  }
-  .land-auction-btn {
-    top: 215.5px;
-    left: 55px;
-  }
 }

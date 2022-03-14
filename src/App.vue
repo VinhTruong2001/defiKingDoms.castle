@@ -157,6 +157,12 @@ export default {
         }
     },
 
+    beforeMount() {
+        if (window.innerWidth < 376) {
+            this.scale = 1;
+        }
+    },
+
     mounted() {
         const castleOverlay = this.$refs.castleOverlay;
         // mouse event
@@ -239,24 +245,23 @@ export default {
 
                 let resetPointX = this.scale * 50;
 
-                if (deviceWidth < 1025) {
-                    resetPointX = this.scale * 120
+                if (deviceWidth < 376) {
+                    resetPointX = this.scale * 180
                 } else if (deviceWidth < 769) {
-                    resetPointX = this.scale * 250
-                } else if (deviceWidth < 376) {
                     resetPointX = this.scale * 150
+                } else if (deviceWidth < 1025) {
+                    resetPointX = this.scale * 120
                 }
 
                 if (
-                    (this.scale < 1.5 && deviceWidth < 376) ||
-                    (this.scale < 2 && deviceWidth < 1025) ||
+                    (this.scale < 2 && deviceWidth < 1025 && deviceWidth > 376) ||
                     deviceWidth >= 1025
-
                 ) {
+
                     if (this.distance.x !== 0) {
                         this.distance.x = this.distance.x < 0 ? this.distance.x + 4 : this.distance.x - 4;
 
-                        if (this.distance.x <= 2 && this.distance.x >= -2) {
+                        if (this.distance.x <= 4 && this.distance.x >= -4) {
                             this.distance.x = 0;
                         }
                     }
@@ -277,7 +282,7 @@ export default {
                     if (this.distance.y !== 0) {
                         this.distance.y = this.distance.y < 0 ? this.distance.y + 4 : this.distance.y - 4;
 
-                        if (this.distance.y <= 2 && this.distance.y >= -2) {
+                        if (this.distance.y <= 4 && this.distance.y >= -4) {
                             this.distance.y = 0;
                         }
                     }
@@ -302,10 +307,15 @@ export default {
         },
 
         zoomCastle(e) {
+            const deviceWidth = window.innerWidth
+
             if (e.deltaY < 0) {
                 clearInterval(this.resetInterval);
                 clearTimeout(this.scrollTimeout);
-                if (this.scale < 3) {
+                if (
+                    (deviceWidth < 376 && this.scale < 2)  ||
+                    (deviceWidth >= 376 && this.scale < 3.1)
+                ) {
                     this.scale += 0.15;
 
                     this.distance.x = window.innerWidth/2 - this.mousePosition.x;
@@ -321,7 +331,10 @@ export default {
                     this.resetToCenter();
                 }, 500)
 
-            } else if (this.scale > 1.3) {
+            } else if (
+                (deviceWidth < 376 && this.scale > 1)  ||
+                (deviceWidth >= 376 && this.scale > 1.3)
+            ) {
                 this.scale -= 0.15;
                 this.setCastleTranslate(0, 0);
             }
@@ -335,7 +348,7 @@ export default {
             let limit = 500 * this.scale;
 
             if (window.innerWidth < 376) {
-                limit = 200 * this.scale;
+                limit = 300 * this.scale;
             }
 
             if (this.distance.x >= limit) {

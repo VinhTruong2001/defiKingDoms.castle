@@ -2,6 +2,7 @@
     <div
         class="filter col c-12 m-6 l-4"
         :class="!isExpanded ? '' : 'active'"
+        :key="isMobile"
     >
         <div
             class="filter-expanded game-border basic"
@@ -165,14 +166,30 @@ export default {
             ],
             tempSelectedRegions: [],
             landSearchId: "",
+            windowWidth: window.innerWidth,
         }
     },
 
     mounted() {
-        if (screen.width < 376) {
+        if (this.windowWidth < 740) {
             this.isMobile = true;
         } else {
             this.isMobile = false;
+        }
+
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        })
+    },
+
+    watch: {
+        windowWidth(newWidth) {
+            console.log(newWidth)
+            if (newWidth < 740) {
+                this.isMobile = true;
+            } else {
+                this.isMobile = false;
+            }
         }
     },
 
@@ -233,6 +250,10 @@ export default {
 
             this.landSearchId = "";
             this.$emit('applyFilter')
+        },
+
+        onResize() {
+            this.windowWidth = window.innerWidth
         }
     }
 }
@@ -402,7 +423,7 @@ export default {
 
 @media (max-width: 376px) {
     .filter {
-        height: 25%;
+        height: 33%;
         margin-bottom: 15px;
     }
 

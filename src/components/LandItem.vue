@@ -6,7 +6,7 @@
                 <div
                     class="land-image"
                     :style="{
-                        backgroundImage: 'url(./src/assets/images/lands/land-' + land.id + '.png)'
+                        backgroundImage: 'url(src/assets/images/lands/land-' + land.id + '.png)'
                     }"
                 >
                     <div
@@ -159,7 +159,7 @@ export default {
 
 <style scoped>
 .land-item {
-    height: 462px;
+    height: auto;
     background-color: #eecba1;
     margin-bottom: 15px;
     padding: 16px 16px 24px;

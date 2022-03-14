@@ -1,7 +1,8 @@
 <template>
     <div class="land-list game-scroll-bar row" v-if="lands.length !== 0">
         <div
-            class="col c-12 l-3"
+            class="col"
+            :class="gridCol"
             v-for="land in lands"
             :key="land.id"
         >
@@ -29,6 +30,51 @@ export default {
         'lands',
         'action'
     ],
+
+    data() {
+        return {
+            windowWidth: window.innerWidth,
+            gridCol: 'c-12 l-3'
+        }
+    },
+
+    watch: {
+        windowWidth(newWidth) {
+            if (newWidth < 530) {
+                this.gridCol = 'c-12'
+            } else if (newWidth < 740) {
+                this.gridCol = 'c-6'
+            } else if (newWidth < 1300) {
+                this.gridCol = 'c-12 l-6'
+            } else if (newWidth < 1600) {
+                this.gridCol = 'l-4'
+            } else {
+                this.gridCol = 'l-3'
+            }
+        }
+    },
+
+    mounted() {
+        if (this.windowWidth < 530) {
+            this.gridCol = 'c-12 l-3'
+        } else if (this.windowWidth < 740) {
+            this.gridCol = 'c-6'
+        } else if (this.windowWidth < 1300) {
+            this.gridCol = 'c-12 l-6'
+        } else if (this.windowWidth < 1600) {
+            this.gridCol = 'l-4'
+        }
+
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        })
+    },
+
+    methods: {
+        onResize() {
+            this.windowWidth = window.innerWidth
+        }
+    }
 }
 </script>
 
