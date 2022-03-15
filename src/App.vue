@@ -68,9 +68,7 @@
                         class="jester-grandle-btn click-cursor"
                         @click="this.$refs.jesterModal.toggleModal()"
                     >
-                        <game-button
-                            title="Jester Grandle"
-                        />
+                        <game-button title="Jester Grandle" />
                     </div>
                 </div>
 

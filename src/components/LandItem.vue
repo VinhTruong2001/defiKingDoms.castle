@@ -6,7 +6,7 @@
                 <div
                     class="land-image"
                     :style="{
-                        backgroundImage: 'url(src/assets/images/lands/land-' + land.id + '.png)'
+                        backgroundImage: `url('src/assets/images/lands/land-${land.id}.png')`
                     }"
                 >
                     <div
@@ -153,7 +153,7 @@ export default {
                 'Stillwood Meadow'
             ],
         }
-    }
+    },
 }
 </script>
 

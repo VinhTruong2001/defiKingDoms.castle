@@ -235,17 +235,17 @@ li {
 .land-auction-btn {
   position: absolute;
   top: 184.5px;
-  left: 88px;
+  left: 83px;
   height: 43px;
-  width: 33px;
+  width: 43px;
 }
 
 .jester-grandle-btn {
   position: absolute;
-  top: -9px;
-  right: -11px;
-  height: 30px;
-  width: 33px;
+  top: -11px;
+  right: -16px;
+  height: 43px;
+  width: 43px;
 }
 
 .close-btn {
