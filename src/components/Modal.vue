@@ -6,7 +6,7 @@
         <div
             class="modal game-border fancy"
             :style="{
-                width: width + 'px',
+                width: autoWidth,
                 height: height + 'px',
                 marginBottom: (npcDialogue ? 30 : 0) + 'px',
             }"
@@ -39,7 +39,7 @@
             class="npc-dialogue"
             v-if="npcDialogue"
             :style="{
-                width: width + 'px',
+                width: autoWidth,
             }"
         >
                 <h4 class="npc-name">
@@ -66,6 +66,30 @@ export default {
     data() {
         return {
             isOpen: false,
+            autoWidth: this.width + 'px',
+            windowWidth: window.innerWidth,
+        }
+    },
+
+    mounted() {
+        if (window.innerWidth < this.width) {
+            this.autoWidth = '100vw';
+        } else {
+            this.autoWidth = this.width + 'px';
+        }
+
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        })
+    },
+
+    watch: {
+        windowWidth(newWidth) {
+            if (newWidth < this.width) {
+                this.autoWidth = '100vw';
+            } else {
+                this.autoWidth = this.width + 'px';
+            }
         }
     },
 
@@ -73,6 +97,10 @@ export default {
         toggleModal() {
             this.isOpen = !this.isOpen;
         },
+
+        onResize() {
+            this.windowWidth = window.innerWidth
+        }
     }
 }
 </script>
@@ -260,7 +288,7 @@ export default {
     background-position: 0 0,100% 0;
 }
 
-@media (max-width: 376px) {
+@media (max-width: 590px) {
     .modal,
     .npc-dialogue {
         width: 100vw !important;

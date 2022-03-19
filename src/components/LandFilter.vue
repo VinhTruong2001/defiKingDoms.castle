@@ -184,7 +184,6 @@ export default {
 
     watch: {
         windowWidth(newWidth) {
-            console.log(newWidth)
             if (newWidth < 740) {
                 this.isMobile = true;
             } else {
